@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <title>hooks</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="./dist/app.js">
+      // 리액트 개발에 필요한 모든것을 넣으면 된다
+      // 웹팩 설치하기
+      // cd public > npm init
+      // author:yong, license:MIT, yes
+      // npm i reacct react-dom
+      // npm i -D webpack webpack-cli
+      // -D는 개발에서만, 실제 서비스 에서는 웹팩필요없음
+      // packge.json을 보면 dep에서는 실제서비스 , devDep에서는 개발용
+      // public폴더에 webpack.config.js, client.jsx를 생성
+      // npm에서 불러오기때문에 위의 <script src="https://unpkg.com/react@16/umd/react.development.js">, type="text/babel"등 삭제가능
+      // 이것을 자동으로 해주는것이 create-react-app
+      // 바벨 설치
+      // npm i -D @babel/core
+      // npm i -D @babel/preset-env -> 브라우저 맞춤
+      // npm i -D @babel/preset-react
+      // npm i -D babel-loader
+      // npx webpack
+
+      // 결론
+      // WordRealy.jsx + client.jsx = app.js로 만들어서 index.html이 실행할 수 있도록
+
+
+      // webpack 2만개의 js파일을 한번에 합치는것
+      // 웹팩은 노드랑 관련. 노드는 단순히 js실행기
+      const GuGuDan = () => {
+        const [first, setFirst] = React.useState(Math.ceil(Math.random() * 9));
+
+        const onChangeInput = (e) => {
+          setValue(e.target.value);
+        };
+
+        return <React.Fragment></React.Fragment>;
+      };
+    </script>
+    <script>
+      ReactDOM.render(<GuGuDan />, document.querySelector("#root"));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,136 @@
+<html>
+  <head>
+    <title>구구단</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    //구구단만들기
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      // class 형
+      class GuGudan extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            first: Math.ceil(Math.random() * 9),
+            second: Math.ceil(Math.random() * 9),
+            value: "",
+            result: "",
+          };
+        }
+
+        // 실무에서는 state만 바로 선언하는 방식이 자주 사용됨
+        // state = {
+        //   first: Math.ceil(Math.random() * 9),
+        //   second: Math.ceil(Math.random() * 9),
+        //   value: "",
+        //   result: "",
+        // };
+
+        // onSubmit과 onChange는 화살표 함수 , render부분은 쓸필요없음
+        onSubmit = (e) => {
+          e.preventDefault();
+          if (
+            parseInt(this.state.value) ===
+            this.state.first * this.state.second
+          ) {
+            // 바뀔 state와 현재state를 구분하기 위해 setState에 리턴을 넣는형식
+            // result: this.state.value + "정답"을 result: prevState.value + "정답"로 바꾼다
+            // ★원칙 : 예전값을 가져와서 새로운값을 내보낼때에는 함수를 써서 헷갈리지 않게한다
+
+            this.setState((prevState) => {
+              return {
+                result: prevState.value + "정답",
+                first: Math.ceil(Math.random() * 9),
+                second: Math.ceil(Math.random() * 9),
+                value: "",
+              };
+            });
+          } else {
+            this.setState({
+              result: "오답",
+              value: "",
+            });
+          }
+          this.input.focus();
+        };
+
+        onChange = (e) => {
+          this.setState({ value: e.target.value });
+        };
+
+        input;
+
+        onRefInput = (c) => {
+          this.input = c;
+        };
+
+        render() {
+          // 렌더에 대해서
+          // setState하면은 렌더가 실행됨. 입력값을 입력하면 setState되어서 콘솔값도 계속 나오고 렌더도 새롭게된다
+          // 따라서 성능 최적화 시에 주의해야함.
+          // 처음에 렌더부분에 넣엇던 onChange, onSubmit부분을 위로 빼는 이유도, 함수가 복잡해지면 계속 새로 만들어져서
+          // 빼는것이 좋다.
+          console.log(this.state.value);
+
+          // 빈태그 생성가능(<>), 또는 그냥 <div> or <React.Fragment>로도 처리가능
+
+          // 리액트에서는 document.등등은 안씀. 리액트가 제공하는것을 쓰는것이 좋다 > input ref
+          // 공홈 예제
+          // Ref를 사용해야 할 때
+          // Ref의 바람직한 사용 사례는 다음과 같습니다.
+          // 포커스, 텍스트 선택영역, 혹은 미디어의 재생을 관리할 때.
+          // 애니메이션을 직접적으로 실행시킬 때.
+          // 서드 파티 DOM 라이브러리를 React와 같이 사용할 때.
+          // 선언적으로 해결될 수 있는 문제에서는 ref 사용을 지양하세요.
+          // 예를 들어, Dialog 컴포넌트에서 open()과 close() 메서드를 두는 대신, isOpen이라는 prop을 넘겨주세요.
+
+          // dom이란?
+          // html을 브라우저(사파리, 크롬 등)위에 실체화 했을때 그것들 구성요소. 브라우저라는 공장이 만듦.
+          // 특정 언어에 종속되지는 않음. 자바스크립트는 아니지만 js를 통해서 제어할 수 있다.
+          // node란?
+          // dom들은 다 노드다.
+          // bom > browser
+          // virtual dom이란?
+          // dom의 구조만 간결히 따라한 js객체
+          // 화면에서 변한부분만 비교해서 그부분만 갱신하는데 그 비교대상으로 쓰인다. 리액트 뷰.
+          // 리액트와 selvte차이 : 리액트는 라이브러리,
+          // svelte는 컴파일러기 때문에 리액트는 가상돔으로 비교, 스벨트는 가상돔 안쓰고 직접 변경
+
+          return (
+            <React.Fragment>
+              <div>
+                {this.state.first}곱하기{this.state.second}은?
+              </div>
+              <form onSubmit={this.onSubmit}>
+                <input
+                  ref={this.onRefInput}
+                  type="number"
+                  value={this.state.value}
+                  onChange={this.onChange}
+                />
+                <button>입력</button>
+              </form>
+              <div>{this.state.result}</div>
+            </React.Fragment>
+          );
+        }
+      }
+    </script>
+    <script type="text/babel">
+      ReactDOM.render(
+        <div>
+          <GuGudan />
+          <GuGudan />
+          <GuGudan />
+          <GuGudan />
+        </div>,
+        document.querySelector("#root")
+      );
+      // 반복하고싶으면 <GuGudan />부분을 복붙
+    </script>
+  </body>
+</html>
