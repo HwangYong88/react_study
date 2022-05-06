@@ -3,22 +3,35 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack"
+    "dev": "webpack serve --env development"
   },
   "author": "yong",
   "license": "MIT",
   "dependencies": {
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "reacct": "^0.0.1-security",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",
-    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/preset-env": "^7.17.10",
     "@babel/preset-react": "^7.16.7",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.5",
     "babel-loader": "^8.2.5",
+    "react-refresh": "^0.9.0",
     "webpack": "^5.72.0",
-    "webpack-cli": "^4.9.2"
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.9.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HwangYong88/react_study.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/HwangYong88/react_study/issues"
+  },
+  "homepage": "https://github.com/HwangYong88/react_study#readme",
   "description": ""
 }
