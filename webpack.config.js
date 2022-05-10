@@ -6,10 +6,6 @@ module.exports = {
   name: "webpack-install-test",
   mode: "development",
   devtool: "eval",
-  devServer: {
-    port: 8080,
-    static: { directory: path.resolve(__dirname) },
-  },
   resolve: {
     extensions: [".js", ".jsx"],
   },
@@ -22,7 +18,17 @@ module.exports = {
         test: /\.jsx?/,
         loader: "babel-loader",
         options: {
-          presets: ["@babel/preset-env", "@babel/preset-react"],
+          presets: [
+            [
+              "@babel/preset-env",
+              {
+                targets: {
+                  browsers: ["last 2 chrome versions"], // 크롬 버전 호환
+                },
+              },
+            ],
+            "@babel/preset-react",
+          ],
           plugins: [
             "@babel/plugin-proposal-class-properties",
             "react-refresh/babel",
@@ -35,5 +41,11 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "app.js",
+  },
+  devServer: {
+    port: 8080,
+    devMiddleware: { publicPath: "/dist" },
+    static: { directory: path.resolve(__dirname) },
+    hot: true,
   },
 };

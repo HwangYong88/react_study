@@ -1,0 +1,68 @@
+react / react-router/ react-query/ typescript / vite/ express/ firebase / vercel
+
+쇼핑몰
+
+
+
+1. 라우터 처리 :
+yarn init -y
+yarn add react react-dom vite react-router-dom
+
+vite의 라우터 vite-plugin-next-react-router
+
+디펜던시와 dev디펜던시 . 배포할때 포함되냐 안된냐의 차이
+
+비트는 로컬에서 개발할 때 번들링을 하지 않고 ESM 방식을 사용하기 때문에 로컬 서버 구동 속도가 매우 빠릅니다. 500개 정도 되는 모듈을 갖고 있는 웹 서비스를 웹팩 데브 서버 (opens new window)와 비트로 비교해 본다면 실행 시간이 20 ~ 30배 이상 차이가 납니다. 웹팩 데브 서버는 처음 로컬 서버를 시작할 때 관련 있는 모듈들을 번들링 해서 메모리에 적재하는 시간이 필요하기 때문에 당연히 어느 정도의 시간이 필요합니다. 반면 비트는 번들링을 하지 않고 바로 서버를 실행하기 때문에 명령어를 실행함과 동시에 서버가 바로 구동됩니다.
+
+2. dummy API
+웹상에서 쇼핑몰용 더미 api를 가져올 수 있다.
+
+react-query를 사용하기
+get을 한 데이터에 대해 update를 하면 자동으로 get을 다시 수행한다. (예를 들면 게시판의 글을 가져왔을 때 게시판의 글을 생성하면 게시판 글을 get하는 api를 자동으로 실행 ), 데이터가 오래 되었다고 판단되면 다시 get 
+
+fetch를 사용하기
+async(
+try()
+	const res=await fetch(url, fetchOptions)
+	const json=await res.json()
+	return json
+catch() 
+)
+
+types.ts에 타입정의를 하기
+
+
+vite공홈에서 sass를 어떻게 쓰는지 보기
+
+목록페이지 구성
+1. const productList안에 useQuery로 데이터 안에 fetch사용해서 데이터 받기 
+2. return (맵으로 리스트 보여주기)
+
+클릭 했을때 상세페이지로 이동하기
+USEquery를 이용해서
+상세페이지 구조 ([id].tsx)
+1. const id = useParams()로 파람받기(url)
+2. const ~~ = data로 데이터 선언
+3. return (내용) 안에 2에서 선언한 데이터를 표시
+4. export default ProductDetail
+
+두개비교
+넥스트 : 서버사이드 랜더링에 유리
+비트 : 클라이언트 사이드 렝더링에 유리
+
+비트는 웹팩보다 가볍고 하지만 둘다 배포시에는 빠지고, 번들링을 비트는 안해서 더 가벼움
+
+리액트 쿼리에서 옵션주기 : 캐시타임(1000*60*60*24), 스테일타임(1000*60), refetchOnMount, refetchOnReconnect, refetchOnWindowFocus
+
+리액트쿼리의장점 위와관련 :  캐시를 가지고 있어서 뒤로가기 눌러도 다시 쿼리를 요청하지 않음.
+
+장바구니 만들기
+gnb도 생성(글로번 네비 바)
+msw mock데이터로 서버처럼 구현
+
+리코일 사용(형태관리)
+setCartAmount{cartAmount || 0 + 1}의 표기방법
+
+mutataion: 업데이트할때
+리코일은 필요없어서 삭제함 ㅠㅠ
+

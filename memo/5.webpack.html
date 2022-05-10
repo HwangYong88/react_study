@@ -29,6 +29,9 @@
             // npm i -D webpack-dev-server
             // 패키지.json에서 "dev": "webpack serve --env development" 로 변경
 
+            //  [ReactRefreshPlugin] Hot Module Replacement (HMR) is not enabled! React Refresh requires HMR to function properly.
+            // 위의 에러가 나와도 핫로딩과는 상관없이 잘됨
+
             // 결론
             // WordRealy.jsx + client.jsx = app.js로 만들어서 index.html이 실행할 수 있도록
             // webpack.config.js 에 추가 const RefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
