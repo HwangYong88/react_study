@@ -1,6 +1,5 @@
 const React = require("react");
 const Try = (fruits) => {
-  console.log(fruits);
   // key가 잘안됨
   return (
     <li>

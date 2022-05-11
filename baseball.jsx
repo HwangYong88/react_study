@@ -1,12 +1,11 @@
 const React = require("react"); // 노드의 모듈 시스템
-const { useState, useRef } = React;
+const { useState, useRef, createRef } = React;
 const Try = require("./Try");
 
 const Baseball = () => {
   const [answer, setAnswer] = "";
   const [value, setValue] = useState("");
-  const [tries, setTries] = useState([1, 2]);
-  const [fruits, setFruits] = useState([
+  const [fruits] = useState([
     { fruit: "apple", taste: "good" },
     { fruit: "pine", taste: "bad" },
     { fruit: "grape", taste: "excel" },
@@ -25,6 +24,7 @@ const Baseball = () => {
     setValue("");
 
     inputRef.current.focus();
+    // inputRef = createRef(); 같은 효과
   };
 
   const onChangeInput = (e) => {
@@ -43,7 +43,7 @@ const Baseball = () => {
           ref={inputRef}
           onChange={onChangeInput}
           value={value}
-          maxLength={4}
+          maxLength="4"
         />
       </form>
       <button>클릭</button>
