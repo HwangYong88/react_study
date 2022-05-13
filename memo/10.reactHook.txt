@@ -1,4 +1,5 @@
-리액트 훅 : useState훅---------------------------------
+useState훅---------------------------------
+
 초기값설정(useState) 에서 무거운 작업을 하게될경우에는 useState안에 콜백함수를 넣어주게되면 초기화 할때만 부르고 다음부터는 부르지 않는다.
 ex) const [names, setNames] = useState(() =>{return heavyWork();});처럼
 
@@ -40,7 +41,7 @@ const hardSum = useMemo(() => {
 }, [hardNumber])
 
 >[hardNumber]: 이변수가 변할때만 유즈메모 사용
->return hardCalculate(hardNumber) :  유즈메모의 대상 함수(리턴값)
+>return hardCalculate(hardNumber) :  유즈메모의 대상 함수(리턴값)(리턴이 없으면 거기만 처리)
 
 10. 사실 무거운 처리는 리액트에서는 없기 때문에 주로 사용되는 경우는 
 
@@ -65,7 +66,20 @@ useCallback -----------------------------------
 
 차이점 useCallback : 함수를 리턴 , useMemo : 값을 리턴
 
+자식함수에 프롭스를 넘기는 부모의 경우에는 유즈콜백을 해두는것이 좋다. 매번 새롭게 prop를 넘기면 자식입장에서는
+새로운 props때문에 새롭게 렌더링(불필요한)이 되기때문에.한번 만든 함수를 필요할때만 새로 만들고 재사용하는 것은 여전히 중요합니다.
 
+--예시
+  const onChange = useCallback(
+    e => {
+      const { name, value } = e.target;
+      setInputs({
+        ...inputs,
+        [name]: value
+      });
+    },
+    [inputs]
+  );
 
 useReducer---------------------------------------
 
@@ -81,4 +95,74 @@ dispatch(Action) -------> Reducer(State, Action) 하면 state를 update
 
 useReducer도 변경시 컴포넌트 렌더링
 
+
+useEffect-----------------------------------------
+userEffect 두번째 인자(배열)이 바뀔때 유즈익펙트를 재실행한다
+
+useEffect()란?
+useEffect() 함수는 React component가 렌더링 될 때마다 특정 작업(Sied effect)을 실행할 수 있도록 하는 리액트 Hook입니다. 
+여기서 Side effect는 component가 렌더링 된 이후에 비동기로 처리되어야 하는 부수적인 효과들을 뜻합니다. 
+이러한 기능으로 인해 함수형 컴포넌트에서도 클래스형 컴포넌트에서 사용했던 생명주기 메서드를 사용할 수 있게 되었습니다.
+
+
+componentDidMount: 컴포넌트를 만들고, 첫 렌더링을 다 마친 후 실행.
+componentDidUpdate: 리렌더링을 완료한 후 실행. 즉 render()가 업데이트될 때마다 실행
+compoenntWillUnMount: 컴포넌트를 DOM에서 제거할 때 실행.
+ 
+
+기본 형태
+useEffect(function, deps)
+function : 실행하고자 하는 함수
+deps : 배열 형태. function을 실행시킬 조건.
+deps에 특정값을 넣게 되면 컴포넌트가 mount 될 때, 지정한 값이 업데이트될 때 useEffect를 실행합니다.
+ 
+
+useEffect 함수 불러오기
+import React, { useEffect } from "react";
+ 
+
+1. Component가 Mount 되었을 때(나타날 때)
+
+  useEffect(() => {
+    console.log("렌더링 될때마다 실행");
+  });
+deps부분을 생략한다면 해당 컴포넌트가 렌더링 될 때마다 useEffect가 실행되게 됩니다. 만약 맨 처음 렌더링 될 때 한 번만 실행하고 싶다면 deps위치에 빈 배열을 넣어줍니다.
+
+  useEffect(() => {
+    console.log("맨 처음 렌더링될 때 한 번만 실행");
+  },[]);
+ 
+
+2. Component가 Update 되었을 때(props, state 변경)
+
+  useEffect(() => {
+    console.log(name);
+    console.log("name이라는 값이 업데이트 될 때만 실행");
+  },[name]);
+특정값이 업데이트될 때만 실행하고 싶을 때는 deps위치의 배열 안에 실행 조건을 넣어줍니다. 업데이트뿐만 아니라 마운터 될 때도 실행되므로 업데이트될 때만 실행시키고 싶다면 아래와 같은 방법을 사용합니다.
+
+  const mounted = useRef(false);
+  useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+    } else {
+      console.log(name);
+      console.log("업데이트 될 때마다 실행");
+    }
+  }, [name]);
+ 
+
+3. Component가 Unmount 되었을 때(사라질 때) & Update 되기 직전에
+
+  useEffect(() => {
+    console.log("컴포넌트 나타남");
+    console.log(name);
+    return () => {
+      console.log("cleanUp 함수");
+    };
+  });
+useEffect는 함수를 반환할 수 있는데 이 함수를 cleanup이라고 합니다.
+
+Unmount 될 때만 cleanup 함수를 실행시키고 싶다면 deps에 빈 배열을,
+특정 값이 업데이트되기 직전에 cleanup 함수를 실행시키고 싶다면 deps에 해당 값을 넣어주면 됩니다.
 

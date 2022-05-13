@@ -20,7 +20,7 @@ const rps = () => {
   const interval = useRef();
   // useEffect는 componentDidMount, componentDidUpdate 역할(1대1 대응은 아니지만 두개의 역할동시에함)
   useEffect(() => {
-    interval.current = setInterval(changeImg, 1300);
+    // interval.current = setInterval(changeImg, 1300); 시스템 부하로 꺼둠
     return () => {
       clearInterval(interval.current);
     };

@@ -5,6 +5,8 @@ const Baseball = require("./baseball");
 const Baseball2 = require("./baseball2");
 const Speed = require("./speed");
 const Rps = require("./rockPaperScissors");
+const Lotto = require("./lotto");
+const Ttt = require("./tictactoe");
 
 ReactDom.render(
   <div>
@@ -14,6 +16,8 @@ ReactDom.render(
     <Baseball2 />
     <Speed />
     <Rps />
+    <Lotto />
+    <Ttt />
   </div>,
   document.querySelector("#root")
 );
